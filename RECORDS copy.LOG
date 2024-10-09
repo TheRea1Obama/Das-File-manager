@@ -1,0 +1,608 @@
+
+[D:\!SHU_FD\DAS\200624_285.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=16:46:56 06/20/24
+DataLength=159959745 : 162222162-5937-2256480
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=23665 : / - / - / - / - / - / - / - / - / - / 23665 /
+CloseRecordFile(ms)=0 < 0 < 3 
+OpenRecordFile(ms)=0 < 0 < 3 
+LastRecordIndex=159
+DiskSpaceAvailable=58770 * 1024 * 1024
+FinishedAt=17:26:23 06/20/24
+
+[D:\!SHU_FD\DAS\210624_285.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=08:05:37 06/21/24
+DataLength=3523187365 : 3567939173-6208-44745600
+FifoUsagePeak(%)=0.09
+FifoFreeSpace=469605 : / - / - / - / - / - / - / - / - / - / 469605 /
+CloseRecordFile(ms)=0 < 0 < 12 
+OpenRecordFile(ms)=0 < 0 < 11 
+LastRecordIndex=3505
+DiskSpaceAvailable=55403 * 1024 * 1024
+FinishedAt=21:08:17 06/21/24
+
+[D:\!SHU_FD\DAS\22_06_24_280.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=00:08:20 06/22/24
+DataLength=4061392399 : 4112588144-5665-51189888
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=537270 : / - / - / - / - / - / - / - / - / - / 537270 /
+CloseRecordFile(ms)=0 < 0 < 13 
+OpenRecordFile(ms)=0 < 0 < 11 
+LastRecordIndex=4039
+DiskSpaceAvailable=51521 * 1024 * 1024
+FinishedAt=15:03:47 06/22/24
+
+[D:\!SHU_FD\DAS\220624_285.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=20:45:50 06/22/24
+DataLength=216501885 : 219263558-1097-2760576
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=28971 : / - / - / - / - / - / - / - / - / - / 28971 /
+CloseRecordFile(ms)=0 < 0 < 5 
+OpenRecordFile(ms)=0 < 0 < 11 
+LastRecordIndex=215
+DiskSpaceAvailable=51315 * 1024 * 1024
+FinishedAt=21:34:07 06/22/24
+
+[D:\!SHU_FD\DAS\220624_285_2.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=22:00:01 06/22/24
+DataLength=3777458881 : 3824045657-13720-46572960
+FifoUsagePeak(%)=0.28
+FifoFreeSpace=488892 : / - / - / - / - / - / - / - / - / - / 488892 /
+CloseRecordFile(ms)=0 < 1 < 216 
+OpenRecordFile(ms)=0 < 3 < 221 
+LastRecordIndex=3754
+DiskSpaceAvailable=47704 * 1024 * 1024
+FinishedAt=11:34:50 06/23/24
+
+[D:\!SHU_FD\DAS\230624_282.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=16:38:02 06/23/24
+DataLength=3732603587 : 3778636172-5769-46026816
+FifoUsagePeak(%)=0.09
+FifoFreeSpace=483157 : / - / - / - / - / - / - / - / - / - / 483157 /
+CloseRecordFile(ms)=0 < 2 < 103 
+OpenRecordFile(ms)=0 < 4 < 122 
+LastRecordIndex=3710
+DiskSpaceAvailable=44137 * 1024 * 1024
+FinishedAt=06:03:18 06/24/24
+
+[D:\!SHU_FD\DAS\248_240624.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=12:55:39 06/24/24
+DataLength=2239171287 : 2268461658-5379-29284992
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=307282 : / - / - / - / - / - / - / - / - / - / 307282 /
+CloseRecordFile(ms)=0 < 0 < 5 
+OpenRecordFile(ms)=0 < 1 < 27 
+LastRecordIndex=2230
+DiskSpaceAvailable=41998 * 1024 * 1024
+FinishedAt=21:27:47 06/24/24
+
+[D:\!SHU_FD\DAS\250624_282.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=02:33:16 06/25/24
+DataLength=3605113251 : 3652060774-1219-46946304
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=492612 : / - / - / - / - / - / - / - / - / - / 492612 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 1 < 28 
+LastRecordIndex=3588
+DiskSpaceAvailable=38552 * 1024 * 1024
+FinishedAt=16:14:17 06/25/24
+
+[D:\!SHU_FD\DAS\260624_240.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=05:38:24 06/26/24
+DataLength=157454323 : 159544675-5424-2084928
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=21874 : / - / - / - / - / - / - / - / - / - / 21874 /
+CloseRecordFile(ms)=0 < 0 < 2 
+OpenRecordFile(ms)=0 < 1 < 16 
+LastRecordIndex=156
+DiskSpaceAvailable=38402 * 1024 * 1024
+FinishedAt=06:14:52 06/26/24
+
+[D:\!SHU_FD\DAS\260624_240.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=10:00:04 06/26/24
+
+[D:\!SHU_FD\DAS\240_260624.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=16:33:24 06/26/24
+DataLength=1565463587 : 1585052300-12585-19576032
+FifoUsagePeak(%)=0.19
+FifoFreeSpace=205476 : / - / - / - / - / - / - / - / - / - / 205476 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 1 < 29 
+LastRecordIndex=1557
+DiskSpaceAvailable=35439 * 1024 * 1024
+FinishedAt=22:15:52 06/26/24
+
+[D:\!SHU_FD\270624_200.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=06:40:05 06/27/24
+DataLength=4364493081 : 4419169432-1375-54674976
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=573875 : / - / - / - / - / - / - / - / - / - / 573875 /
+CloseRecordFile(ms)=0 < 0 < 9 
+OpenRecordFile(ms)=0 < 1 < 36 
+LastRecordIndex=4344
+DiskSpaceAvailable=31268 * 1024 * 1024
+FinishedAt=22:36:33 06/27/24
+
+[D:\!SHU_FD\280624_240.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=02:39:57 06/28/24
+DataLength=1611611625 : 1631869799-10910-20247264
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=212514 : / - / - / - / - / - / - / - / - / - / 212514 /
+CloseRecordFile(ms)=0 < 0 < 10 
+OpenRecordFile(ms)=0 < 1 < 26 
+LastRecordIndex=1604
+DiskSpaceAvailable=29727 * 1024 * 1024
+FinishedAt=08:34:09 06/28/24
+
+[D:\!SHU_FD\280624_280.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=11:12:02 06/28/24
+DataLength=591689013 : 599161183-1162-7471008
+FifoUsagePeak(%)=0.32
+FifoFreeSpace=78412 : / - / - / - / - / - / - / - / - / - / 78412 /
+CloseRecordFile(ms)=0 < 0 < 5 
+OpenRecordFile(ms)=0 < 1 < 27 
+LastRecordIndex=589
+DiskSpaceAvailable=29162 * 1024 * 1024
+FinishedAt=13:22:44 06/28/24
+
+[D:\!SHU_FD\280624_248.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=14:07:24 06/28/24
+DataLength=3710875262 : 3757546289-4851-46666176
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=489803 : / - / - / - / - / - / - / - / - / - / 489803 /
+CloseRecordFile(ms)=0 < 0 < 10 
+OpenRecordFile(ms)=0 < 1 < 41 
+LastRecordIndex=3696
+DiskSpaceAvailable=25616 * 1024 * 1024
+FinishedAt=03:43:44 06/29/24
+
+[D:\!SHU_FD\290624_203.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=09:53:29 06/29/24
+DataLength=3996805119 : 4046935835-6140-50124576
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=526111 : / - / - / - / - / - / - / - / - / - / 526111 /
+CloseRecordFile(ms)=0 < 0 < 9 
+OpenRecordFile(ms)=0 < 1 < 18 
+LastRecordIndex=3979
+DiskSpaceAvailable=21795 * 1024 * 1024
+FinishedAt=00:30:20 06/30/24
+
+[D:\!SHU_FD\300624_282.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=08:04:06 06/30/24
+DataLength=3904083056 : 3953181186-7186-49090944
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=515253 : / - / - / - / - / - / - / - / - / - / 515253 /
+CloseRecordFile(ms)=0 < 0 < 7 
+OpenRecordFile(ms)=0 < 1 < 21 
+LastRecordIndex=3888
+DiskSpaceAvailable=18063 * 1024 * 1024
+FinishedAt=22:22:52 06/30/24
+
+[D:\!SHU_FD\010724_290.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=03:01:56 07/01/24
+DataLength=4478124286 : 4534322811-7613-56190816
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=589782 : / - / - / - / - / - / - / - / - / - / 589782 /
+CloseRecordFile(ms)=0 < 0 < 12 
+OpenRecordFile(ms)=0 < 1 < 36 
+LastRecordIndex=4459
+DiskSpaceAvailable=13781 * 1024 * 1024
+FinishedAt=19:24:55 07/01/24
+
+[D:\!SHU_FD\010724_280.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=21:17:41 07/01/24
+DataLength=4082555894 : 4133944801-9323-51379584
+FifoUsagePeak(%)=0.20
+FifoFreeSpace=539272 : / - / - / - / - / - / - / - / - / - / 539272 /
+CloseRecordFile(ms)=0 < 0 < 6 
+OpenRecordFile(ms)=0 < 1 < 1529 
+LastRecordIndex=4067
+DiskSpaceAvailable=10375 * 1024 * 1024
+FinishedAt=12:16:28 07/02/24
+
+[D:\!SHU_FD\020724_282.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=23:01:23 07/02/24
+DataLength=4127112282 : 4178882130-10296-51759264
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=543272 : / - / - / - / - / - / - / - / - / - / 543272 /
+CloseRecordFile(ms)=0 < 0 < 6 
+OpenRecordFile(ms)=0 < 1 < 68 
+LastRecordIndex=4109
+DiskSpaceAvailable=6430 * 1024 * 1024
+FinishedAt=14:06:50 07/03/24
+
+[D:\!SHU_FD\030724_280.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=20:09:37 07/03/24
+DataLength=3962088662 : 4012004842-5300-49910880
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=523850 : / - / - / - / - / - / - / - / - / - / 523850 /
+CloseRecordFile(ms)=0 < 0 < 12 
+OpenRecordFile(ms)=0 < 1 < 26 
+LastRecordIndex=3945
+DiskSpaceAvailable=2642 * 1024 * 1024
+FinishedAt=10:42:42 07/04/24
+
+[D:\!SHU_FD\040724_282.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=16:00:02 07/04/24
+DataLength=2562831412 : 2595052364-10648-32210208
+FifoUsagePeak(%)=0.10
+FifoFreeSpace=338076 : / - / - / - / - / - / - / - / - / - / 338076 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 1 < 33 
+LastRecordIndex=2551
+DiskSpaceAvailable=190 * 1024 * 1024
+FinishedAt=01:23:29 07/05/24
+
+[D:\!SHU_FD\050724_282.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=02:12:11 07/05/24
+DataLength=995421303 : 1007920857-5922-12493632
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=131134 : / - / - / - / - / - / - / - / - / - / 131134 /
+CloseRecordFile(ms)=0 < 0 < 7 
+OpenRecordFile(ms)=0 < 0 < 10 
+LastRecordIndex=991
+DiskSpaceAvailable=25308 * 1024 * 1024
+FinishedAt=05:50:44 07/05/24
+
+[D:\!SHU_FD\050724_248.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=10:14:19 07/05/24
+DataLength=3844507922 : 3892950163-10337-48431808
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=508329 : / - / - / - / - / - / - / - / - / - / 508329 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 0 < 9 
+LastRecordIndex=3829
+DiskSpaceAvailable=21634 * 1024 * 1024
+FinishedAt=00:21:32 07/06/24
+
+[D:\!SHU_FD\060724_280.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=00:22:06 07/06/24
+DataLength=2640688428 : 2673849402-6606-33154368
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=347989 : / - / - / - / - / - / - / - / - / - / 347989 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 0 < 6 
+LastRecordIndex=2630
+DiskSpaceAvailable=19111 * 1024 * 1024
+FinishedAt=10:02:05 07/06/24
+
+[D:\!SHU_FD\060724_290.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=10:02:28 07/06/24
+DataLength=2333997013 : 2363256622-2745-29256864
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=307082 : / - / - / - / - / - / - / - / - / - / 307082 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 0 < 11 
+LastRecordIndex=2323
+DiskSpaceAvailable=16880 * 1024 * 1024
+FinishedAt=18:34:17 07/06/24
+
+[D:\!SHU_FD\070724_273.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=21:59:23 07/07/24
+DataLength=4305217928 : 4359336849-10729-54108192
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=567915 : / - / - / - / - / - / - / - / - / - / 567915 /
+CloseRecordFile(ms)=0 < 0 < 9 
+OpenRecordFile(ms)=0 < 0 < 9 
+LastRecordIndex=4287
+DiskSpaceAvailable=12766 * 1024 * 1024
+FinishedAt=13:45:55 07/08/24
+
+[D:\!SHU_FD\080724_203.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=15:42:23 07/08/24
+DataLength=500769880 : 507098895-8375-6320640
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=66339 : / - / - / - / - / - / - / - / - / - / 66339 /
+CloseRecordFile(ms)=0 < 0 < 6 
+OpenRecordFile(ms)=0 < 0 < 9 
+LastRecordIndex=498
+DiskSpaceAvailable=12288 * 1024 * 1024
+FinishedAt=17:32:57 07/08/24
+
+[D:\!SHU_FD\090724_273.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=12:48:03 07/09/24
+DataLength=1808121921 : 1831013324-10187-22881216
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=240146 : / - / - / - / - / - / - / - / - / - / 240146 /
+CloseRecordFile(ms)=0 < 0 < 6 
+OpenRecordFile(ms)=0 < 0 < 7 
+LastRecordIndex=1799
+DiskSpaceAvailable=10560 * 1024 * 1024
+FinishedAt=19:28:17 07/09/24
+
+[D:\!SHU_FD\090724_203.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=19:29:03 07/09/24
+DataLength=4020337841 : 4071038644-5027-50695776
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=532080 : / - / - / - / - / - / - / - / - / - / 532080 /
+CloseRecordFile(ms)=0 < 0 < 9 
+OpenRecordFile(ms)=0 < 0 < 9 
+LastRecordIndex=3999
+DiskSpaceAvailable=6717 * 1024 * 1024
+FinishedAt=10:15:52 07/10/24
+
+[D:\!SHU_FD\DAS\100724_285.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=12:59:23 07/10/24
+DataLength=391837735 : 396806092-5925-4962432
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=52081 : / - / - / - / - / - / - / - / - / - / 52081 /
+CloseRecordFile(ms)=0 < 0 < 6 
+OpenRecordFile(ms)=0 < 2 < 27 
+LastRecordIndex=389
+DiskSpaceAvailable=6343 * 1024 * 1024
+FinishedAt=14:26:12 07/10/24
+
+[D:\!SHU_FD\DAS\100724_285.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=15:26:53 07/10/24
+DataLength=1230998644 : 1246516074-7670-15509760
+FifoUsagePeak(%)=2.34
+FifoFreeSpace=162786 : / - / - / - / - / - / - / - / - / - / 162786 /
+CloseRecordFile(ms)=0 < 0 < 7 
+OpenRecordFile(ms)=0 < 1 < 32 
+LastRecordIndex=1225
+DiskSpaceAvailable=5541 * 1024 * 1024
+FinishedAt=19:58:11 07/10/24
+
+[D:\!SHU_FD\DAS\11072024_282.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=06:57:11 07/11/24
+DataLength=4222915901 : 4275941329-884-53024448
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=556542 : / - / - / - / - / - / - / - / - / - / 556542 /
+CloseRecordFile(ms)=0 < 0 < 9 
+OpenRecordFile(ms)=0 < 1 < 32 
+LastRecordIndex=4203
+DiskSpaceAvailable=1506 * 1024 * 1024
+FinishedAt=22:24:45 07/11/24
+
+[D:\!SHU_FD\DAS\120724_218.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=01:54:35 07/13/24
+DataLength=1376470340 : 1393780384-10076-17299968
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=181579 : / - / - / - / - / - / - / - / - / - / 181579 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 1 < 26 
+LastRecordIndex=1370
+DiskSpaceAvailable=190 * 1024 * 1024
+FinishedAt=06:57:13 07/13/24
+
+[D:\!SHU_FD\DAS\130724_218.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=08:18:31 07/13/24
+DataLength=2692975723 : 2726728144-12261-33740160
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=354141 : / - / - / - / - / - / - / - / - / - / 354141 /
+CloseRecordFile(ms)=0 < 0 < 18 
+OpenRecordFile(ms)=0 < 0 < 9 
+LastRecordIndex=2680
+DiskSpaceAvailable=16667 * 1024 * 1024
+FinishedAt=18:08:45 07/13/24
+
+[D:\!SHU_FD\DAS\130724_200.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=18:09:42 07/13/24
+DataLength=3366542189 : 3408713685-4168-42167328
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=442593 : / - / - / - / - / - / - / - / - / - / 442593 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 1 < 31 
+LastRecordIndex=3350
+DiskSpaceAvailable=13450 * 1024 * 1024
+FinishedAt=06:27:21 07/14/24
+
+[D:\!SHU_FD\DAS\140724_200.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=15:35:33 07/14/24
+DataLength=2679362127 : 2713022408-5945-33654144
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=353235 : / - / - / - / - / - / - / - / - / - / 353235 /
+CloseRecordFile(ms)=0 < 0 < 7 
+OpenRecordFile(ms)=0 < 0 < 12 
+LastRecordIndex=2668
+DiskSpaceAvailable=10889 * 1024 * 1024
+FinishedAt=01:24:17 07/15/24
+
+[D:\!SHU_FD\DAS\150724_240.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=06:48:12 07/15/24
+
+[D:\!SHU_FD\DAS\150724_240B.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=12:38:42 07/15/24
+DataLength=4358842659 : 4413426058-9223-54574176
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=572820 : / - / - / - / - / - / - / - / - / - / 572820 /
+CloseRecordFile(ms)=0 < 0 < 11 
+OpenRecordFile(ms)=0 < 1 < 67 
+LastRecordIndex=4338
+DiskSpaceAvailable=5237 * 1024 * 1024
+FinishedAt=04:33:25 07/16/24
+
+[D:\!SHU_FD\DAS\170724_203.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=05:10:41 07/17/24
+DataLength=3894236626 : 3949979672-8326-55734720
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=584448 : / - / - / - / - / - / - / - / - / - / 584448 /
+CloseRecordFile(ms)=0 < 0 < 6 
+OpenRecordFile(ms)=0 < 1 < 38 
+LastRecordIndex=3877
+DiskSpaceAvailable=1516 * 1024 * 1024
+FinishedAt=21:24:46 07/17/24
+
+[D:\!SHU_FD\DAS\180724_203.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=02:08:13 07/18/24
+DataLength=562757976 : 569899942-8110-7133856
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=74872 : / - / - / - / - / - / - / - / - / - / 74872 /
+CloseRecordFile(ms)=0 < 0 < 4 
+OpenRecordFile(ms)=0 < 1 < 25 
+LastRecordIndex=560
+DiskSpaceAvailable=978 * 1024 * 1024
+FinishedAt=04:13:01 07/18/24
+
+[D:\!SHU_FD\DAS\180724_203A.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=04:15:28 07/18/24
+DataLength=823822926 : 836508234-6012-12679296
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=132897 : / - / - / - / - / - / - / - / - / - / 132897 /
+CloseRecordFile(ms)=0 < 0 < 6 
+OpenRecordFile(ms)=0 < 1 < 19 
+LastRecordIndex=820
+DiskSpaceAvailable=190 * 1024 * 1024
+FinishedAt=07:56:58 07/18/24
+
+[D:\!SHU_FD\DAS\180724_203_1.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=08:35:06 07/18/24
+DataLength=2264105044 : 2299415122-4446-35305536
+FifoUsagePeak(%)=0.12
+FifoFreeSpace=370022 : / - / - / - / - / - / - / - / - / - / 370022 /
+CloseRecordFile(ms)=0 < 0 < 8 
+OpenRecordFile(ms)=0 < 1 < 798 
+LastRecordIndex=2255
+DiskSpaceAvailable=8189 * 1024 * 1024
+FinishedAt=18:51:48 07/18/24
+
+[D:\!SHU_FD\DAS\200724_203_1.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=08:38:57 07/20/24
+DataLength=935124909 : 948222324-7719-13089696
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=137283 : / - / - / - / - / - / - / - / - / - / 137283 /
+CloseRecordFile(ms)=0 < 0 < 4 
+OpenRecordFile(ms)=0 < 1 < 16 
+LastRecordIndex=931
+DiskSpaceAvailable=7294 * 1024 * 1024
+FinishedAt=12:27:45 07/20/24
+
+[D:\!SHU_FD\DAS\200724_248.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=13:33:34 07/20/24
+DataLength=3407619426 : 3459842037-10131-52212480
+FifoUsagePeak(%)=0.79
+FifoFreeSpace=547275 : / - / - / - / - / - / - / - / - / - / 547275 /
+CloseRecordFile(ms)=0 < 0 < 10 
+OpenRecordFile(ms)=0 < 1 < 26 
+LastRecordIndex=3394
+DiskSpaceAvailable=4036 * 1024 * 1024
+FinishedAt=04:45:41 07/21/24
+
+[D:\!SHU_FD\DAS\210724_282.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=07:17:06 07/21/24
+DataLength=3657800812 : 3713736984-8108-55928064
+FifoUsagePeak(%)=0.16
+FifoFreeSpace=586228 : / - / - / - / - / - / - / - / - / - / 586228 /
+CloseRecordFile(ms)=0 < 1 < 1197 
+OpenRecordFile(ms)=0 < 1 < 462 
+LastRecordIndex=3643
+DiskSpaceAvailable=539 * 1024 * 1024
+FinishedAt=23:34:09 07/21/24
+
+[D:\!SHU_FD\DAS\220724_240.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=15:18:54 07/22/24
+DataLength=364547313 : 369144256-6607-4590336
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=48179 : / - / - / - / - / - / - / - / - / - / 48179 /
+CloseRecordFile(ms)=0 < 0 < 4 
+OpenRecordFile(ms)=0 < 1 < 30 
+LastRecordIndex=362
+DiskSpaceAvailable=190 * 1024 * 1024
+FinishedAt=16:39:12 07/22/24
+
+[D:\!SHU_FD\DAS\220724_240.000]
+Style=BYMESSAGE
+FifoLength=70000 * 1024
+StartedAt=17:17:37 07/22/24
+DataLength=364661938 : 369241488-10046-4569504
+FifoUsagePeak(%)=0.07
+FifoFreeSpace=47963 : / - / - / - / - / - / - / - / - / - / 47963 /
+CloseRecordFile(ms)=0 < 1 < 5 
+OpenRecordFile(ms)=0 < 1 < 29 
+LastRecordIndex=363
+DiskSpaceAvailable=190 * 1024 * 1024
+FinishedAt=18:37:34 07/22/24
