@@ -9,15 +9,71 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import threading
 import time
 
+class DriveSelector(tk.Toplevel):
+    def __init__(self, parent, drive_mapping):
+        super().__init__(parent)
+        self.title("Select Drives to Scan")
+        self.geometry("400x500")
+        
+        self.selected_drives = []
+        self.drive_mapping = drive_mapping
+        
+        # Create and pack widgets
+        tk.Label(self, text="Select drives to scan:", font=('Arial', 12)).pack(pady=10)
+        
+        # Create frame for checkbuttons
+        self.check_frame = tk.Frame(self)
+        self.check_frame.pack(fill="both", expand=True, padx=20)
+        
+        # Create variables to store checkbox states
+        self.check_vars = {}
+        
+        # Create checkbuttons for each drive
+        for drive_path, drive_id in sorted(drive_mapping.items(), key=lambda x: x[1]):
+            var = tk.BooleanVar()
+            self.check_vars[drive_path] = var
+            cb = ttk.Checkbutton(
+                self.check_frame, 
+                text=f"Drive ID {drive_id} ({drive_path})", 
+                variable=var
+            )
+            cb.pack(anchor="w", pady=5)
+        
+        # Buttons frame
+        btn_frame = tk.Frame(self)
+        btn_frame.pack(fill="x", pady=10)
+        
+        ttk.Button(btn_frame, text="Select All", command=self.select_all).pack(side="left", padx=5)
+        ttk.Button(btn_frame, text="Clear All", command=self.clear_all).pack(side="left", padx=5)
+        ttk.Button(btn_frame, text="Scan Selected", command=self.confirm).pack(side="right", padx=5)
+        
+        # Make dialog modal
+        self.transient(parent)
+        self.grab_set()
+        
+    def select_all(self):
+        for var in self.check_vars.values():
+            var.set(True)
+    
+    def clear_all(self):
+        for var in self.check_vars.values():
+            var.set(False)
+    
+    def confirm(self):
+        self.selected_drives = [
+            drive for drive, var in self.check_vars.items() 
+            if var.get()
+        ]
+        self.destroy()
+
 class FlightFileManager:
-    def __init__(self, root, network_drives):
+    def __init__(self, root):
         self.root = root
-        self.network_drives = network_drives
-        self.flight_data = {}
         self.drive_mapping = {
             "C:/": 61, "E:/": 63, "Y:/": 62, "D:/": 64,
             "G:/": 65, "H:/": 66, "I:/": 67,
         }
+        self.flight_data = {}
         self.scan_complete = threading.Event()
         self.executor = ThreadPoolExecutor(max_workers=os.cpu_count() or 1)
         self.init_gui()
@@ -32,6 +88,17 @@ class FlightFileManager:
         style = ttk.Style()
         style.configure("Custom.Treeview", font=custom_font)
         style.configure("Custom.Treeview.Heading", font=custom_font)  
+
+        # Menu Bar
+        menubar = tk.Menu(self.root)
+        self.root.config(menu=menubar)
+        
+        # File Menu
+        file_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="Select Drives & Scan", command=self.show_drive_selector)
+        file_menu.add_separator()
+        file_menu.add_command(label="Exit", command=self.root.quit)
 
         self.table_frame = tk.Frame(self.root)
         self.table_frame.pack(fill="both", expand=True)
@@ -52,9 +119,6 @@ class FlightFileManager:
         self.delete_btn = tk.Button(self.btn_frame, text="Delete", command=self.delete_files)
         self.delete_btn.pack(side="right", padx=5, pady=5)
 
-        self.reload_btn = tk.Button(self.btn_frame, text="Reload", command=self.load_files)
-        self.reload_btn.pack(side="right", padx=5, pady=5)
-
         self.easter_egg_btn = tk.Button(self.btn_frame, text="Easter Egg", command=self.display_easter_egg)
         self.easter_egg_btn.pack(side="left", padx=5, pady=5)
 
@@ -65,7 +129,11 @@ class FlightFileManager:
         self.status_label = tk.Label(self.root, text="Ready")
         self.status_label.pack(pady=5)
 
-        self.root.after(100, self.load_files) 
+    def show_drive_selector(self):
+        selector = DriveSelector(self.root, self.drive_mapping)
+        self.root.wait_window(selector)
+        if selector.selected_drives:
+            self.load_files(selector.selected_drives)
 
     def easter_egg_message(self):
         messages = [
@@ -78,12 +146,12 @@ class FlightFileManager:
     def display_easter_egg(self):
         messagebox.showinfo("Easter Egg", self.easter_egg_message())
 
-    def load_files(self):
+    def load_files(self, selected_drives):
         self.status_label.config(text="Loading files...")
         self.progress_var.set(0)
         self.table.delete(*self.table.get_children())
         self.scan_complete.clear()
-        threading.Thread(target=self.scan_flight_records, daemon=True).start()
+        threading.Thread(target=self.scan_flight_records, args=(selected_drives,), daemon=True).start()
         self.root.after(100, self.check_scan_complete)
 
     def check_scan_complete(self):
@@ -92,9 +160,9 @@ class FlightFileManager:
         else:
             self.root.after(100, self.check_scan_complete)
 
-    def scan_flight_records(self):
+    def scan_flight_records(self, selected_drives):
         pattern = re.compile(r'(\d{6})_(\d+)')
-        total_drives = len(self.network_drives)
+        total_drives = len(selected_drives)
         
         def process_drive(drive):
             drive_data = []
@@ -113,7 +181,7 @@ class FlightFileManager:
                                 try:
                                     size = file.stat().st_size
                                 except OSError:
-                                    size = 0  # Handle cases where file size can't be determined
+                                    size = 0
                                 drive_data.append({
                                     "date": date,
                                     "plane_number": plane_number,
@@ -124,7 +192,7 @@ class FlightFileManager:
             return drive_data
 
         start_time = time.time()
-        futures = [self.executor.submit(process_drive, drive) for drive in self.network_drives]
+        futures = [self.executor.submit(process_drive, drive) for drive in selected_drives]
 
         flight_data = {}
         for i, future in enumerate(as_completed(futures)):
@@ -133,7 +201,7 @@ class FlightFileManager:
                 if key not in flight_data:
                     flight_data[key] = {"files": [], "total_size": 0}
                 flight_data[key]["files"].append(entry['filepath'])
-                flight_data[key]["total_size"] += entry['size'] / (1024 * 1024 * 1024)  # Convert to GB
+                flight_data[key]["total_size"] += entry['size'] / (1024 * 1024 * 1024)
             self.progress_var.set((i + 1) / total_drives * 100)
 
         self.flight_data = flight_data
@@ -142,16 +210,12 @@ class FlightFileManager:
         self.scan_complete.set()
 
     def display_flights(self):
-        start_time = time.time()
         for key, data in self.flight_data.items():
             date, plane_number, drive_id = key.split('_')
             formatted_date = f"{date[:2]}/{date[2:4]}/{date[4:]}"
             total_size = round(data["total_size"], 2)
             self.table.insert("", "end", values=(formatted_date, plane_number, drive_id, f"{len(data['files'])} files", f"{total_size:.2f}"))
-        end_time = time.time()
-        print(f"Display completed in {end_time - start_time:.2f} seconds")
         self.status_label.config(text="Ready")
-
 
     def copy_files(self):
         selected = self.table.selection()
@@ -208,13 +272,10 @@ class FlightFileManager:
                             os.remove(file)
                         except Exception as e:
                             self.root.after(0, messagebox.showerror, "Deletion Error", f"Error deleting file {file}: {str(e)}")
-        self.root.after(0, self.load_files)
         self.root.after(0, messagebox.showinfo, "Deletion Complete", "Selected files have been deleted.")
         self.root.after(0, self.status_label.config, {"text": "Ready"})
 
-
 if __name__ == "__main__":
-    network_drives = ["C:/", "D:/", "E:/"]
     root = tk.Tk()
-    app = FlightFileManager(root, network_drives)
+    app = FlightFileManager(root)
     root.mainloop()
