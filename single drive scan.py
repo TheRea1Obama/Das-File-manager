@@ -70,8 +70,8 @@ class FlightFileManager:
     def __init__(self, root):
         self.root = root
         self.drive_mapping = {
-            "C:/": 61, "E:/": 63, "Y:/": 62, "D:/": 64,
-            "G:/": 65, "H:/": 66, "I:/": 67,
+            "Z:/": 61, "Y:/": 62, "X:/": 63 , "W:/": 64,
+            "V:/": 65, "U:/": 66, "T:/": 67,
         }
         self.flight_data = {}
         self.scan_complete = threading.Event()
@@ -103,10 +103,10 @@ class FlightFileManager:
         self.table_frame = tk.Frame(self.root)
         self.table_frame.pack(fill="both", expand=True)
         
-        self.table = ttk.Treeview(self.table_frame, columns=("date", "plane", "id", "files", "size"), show='headings', style="Custom.Treeview")
+        self.table = ttk.Treeview(self.table_frame, columns=("date", "plane", "id", "files", "GB"), show='headings', style="Custom.Treeview")
         self.table.pack(fill="both", expand=True)
 
-        for col in ("date", "plane", "id", "files", "size"):
+        for col in ("date", "plane", "id", "files", "GB"):
             self.table.heading(col, text=col.capitalize())
             self.table.column(col, width=100, anchor="center")
 
