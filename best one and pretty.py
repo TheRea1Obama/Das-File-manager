@@ -9,6 +9,95 @@ from concurrent.futures import ThreadPoolExecutor
 import asyncio
 import time
 from datetime import datetime
+from tkinter import PhotoImage
+
+class ModernTheme:
+    # Color scheme
+    PRIMARY = "#2C3E50"  # Dark blue-gray
+    SECONDARY = "#3498DB"  # Bright blue
+    ACCENT = "#E74C3C"  # Red
+    BACKGROUND = "#ECF0F1"  # Light gray
+    TEXT_PRIMARY = "#2C3E50"  # Dark blue-gray
+    TEXT_SECONDARY = "#7F8C8D"  # Gray
+    SUCCESS = "#27AE60"  # Green
+    WARNING = "#F39C12"  # Orange
+    
+    # Font configurations
+    FONT_FAMILY = "Helvetica"
+    FONT_SIZE_LARGE = 14
+    FONT_SIZE_MEDIUM = 12
+    FONT_SIZE_SMALL = 10
+
+    @classmethod
+    def configure_styles(cls):
+        style = ttk.Style()
+        
+        # Configure Treeview
+        style.configure(
+            "Custom.Treeview",
+            background=cls.BACKGROUND,
+            foreground=cls.TEXT_PRIMARY,
+            fieldbackground=cls.BACKGROUND,
+            rowheight=30,
+            font=(cls.FONT_FAMILY, cls.FONT_SIZE_MEDIUM)
+        )
+        
+        style.configure(
+            "Custom.Treeview.Heading",
+            background=cls.PRIMARY,
+            foreground="white",
+            font=(cls.FONT_FAMILY, cls.FONT_SIZE_MEDIUM, "bold")
+        )
+        
+        # Configure Buttons
+        style.configure(
+            "Modern.TButton",
+            background=cls.SECONDARY,
+            foreground="white",
+            padding=(20, 10),
+            font=(cls.FONT_FAMILY, cls.FONT_SIZE_MEDIUM)
+        )
+        
+        # Configure Progress bar
+        style.configure(
+            "Modern.Horizontal.TProgressbar",
+            troughcolor=cls.BACKGROUND,
+            background=cls.SECONDARY,
+            thickness=10
+        )
+
+class ModernButton(tk.Button):
+    def __init__(self, master, **kwargs):
+        kwargs.setdefault('bg', ModernTheme.SECONDARY)  # Set default bg if not provided
+        super().__init__(
+            master,
+            fg="white",
+            font=(ModernTheme.FONT_FAMILY, ModernTheme.FONT_SIZE_MEDIUM),
+            relief="flat",
+            padx=20,
+            pady=10,
+            cursor="hand2",
+            **kwargs
+        )
+        self.bind("<Enter>", self.on_enter)
+        self.bind("<Leave>", self.on_leave)
+
+    def on_enter(self, e):
+        self['background'] = "#2980B9"  # Darker shade of SECONDARY
+
+    def on_leave(self, e):
+        self['background'] = ModernTheme.SECONDARY
+
+class DeleteButton(ModernButton):
+    def __init__(self, master, **kwargs):
+        kwargs['bg'] = ModernTheme.ACCENT  # Set bg in kwargs instead of passing directly
+        super().__init__(master, **kwargs)
+
+    def on_enter(self, e):
+        self['background'] = "#C0392B"  # Darker shade of ACCENT
+
+    def on_leave(self, e):
+        self['background'] = ModernTheme.ACCENT
 
 class RecordLogParser:
     @staticmethod
@@ -68,38 +157,79 @@ class DriveSelector(tk.Toplevel):
     def __init__(self, parent, drive_mapping):
         super().__init__(parent)
         self.title("Select Drives to Scan")
-        self.geometry("400x500")
+        self.geometry("500x600")
+        self.configure(bg=ModernTheme.BACKGROUND)
         
         self.selected_drives = []
         self.drive_mapping = drive_mapping
         
-        tk.Label(self, text="Select drives to scan:", font=('Arial', 12)).pack(pady=10)
+        # Title Label with modern styling
+        title_frame = tk.Frame(self, bg=ModernTheme.PRIMARY, pady=15)
+        title_frame.pack(fill="x")
         
-        self.check_frame = tk.Frame(self)
-        self.check_frame.pack(fill="both", expand=True, padx=20)
+        tk.Label(
+            title_frame,
+            text="Select Drives to Scan",
+            font=(ModernTheme.FONT_FAMILY, ModernTheme.FONT_SIZE_LARGE, "bold"),
+            fg="white",
+            bg=ModernTheme.PRIMARY
+        ).pack()
+        
+        # Main content frame
+        content_frame = tk.Frame(self, bg=ModernTheme.BACKGROUND, pady=20)
+        content_frame.pack(fill="both", expand=True, padx=30)
         
         self.check_vars = {}
         
+        # Create checkbuttons with modern styling
         for drive_path, drive_id in sorted(drive_mapping.items(), key=lambda x: x[1]):
             var = tk.BooleanVar()
             self.check_vars[drive_path] = var
+            
+            frame = tk.Frame(content_frame, bg=ModernTheme.BACKGROUND, pady=5)
+            frame.pack(fill="x")
+            
             cb = ttk.Checkbutton(
-                self.check_frame, 
-                text=f"Drive ID {drive_id} ({drive_path})", 
-                variable=var
+                frame,
+                text=f"Drive ID {drive_id}",
+                variable=var,
+                style="Modern.TCheckbutton"
             )
-            cb.pack(anchor="w", pady=5)
+            cb.pack(side="left")
+            
+            tk.Label(
+                frame,
+                text=f"({drive_path})",
+                font=(ModernTheme.FONT_FAMILY, ModernTheme.FONT_SIZE_SMALL),
+                fg=ModernTheme.TEXT_SECONDARY,
+                bg=ModernTheme.BACKGROUND
+            ).pack(side="left", padx=5)
         
-        btn_frame = tk.Frame(self)
-        btn_frame.pack(fill="x", pady=10)
+        # Button frame
+        btn_frame = tk.Frame(self, bg=ModernTheme.BACKGROUND, pady=20)
+        btn_frame.pack(fill="x", padx=30)
         
-        ttk.Button(btn_frame, text="Select All", command=self.select_all).pack(side="left", padx=5)
-        ttk.Button(btn_frame, text="Clear All", command=self.clear_all).pack(side="left", padx=5)
-        ttk.Button(btn_frame, text="Scan Selected", command=self.confirm).pack(side="right", padx=5)
+        ModernButton(
+            btn_frame,
+            text="Select All",
+            command=self.select_all
+        ).pack(side="left", padx=5)
+        
+        ModernButton(
+            btn_frame,
+            text="Clear All",
+            command=self.clear_all
+        ).pack(side="left", padx=5)
+        
+        ModernButton(
+            btn_frame,
+            text="Scan Selected",
+            command=self.confirm
+        ).pack(side="right", padx=5)
         
         self.transient(parent)
         self.grab_set()
-        
+
     def select_all(self):
         for var in self.check_vars.values():
             var.set(True)
@@ -124,60 +254,119 @@ class FlightFileManager:
         }
         self.flight_data = {}
         self.executor = ThreadPoolExecutor(max_workers=os.cpu_count() or 1)
+        
+        # Configure modern theme
+        ModernTheme.configure_styles()
         self.init_gui()
 
     def init_gui(self):
-        self.root.title("Flight File Manager by Danny Karp")
-        self.root.geometry("800x600")
-        self.root.resizable(True, True)
-
-        custom_font = font.Font(size=14)
-
-        style = ttk.Style()
-        style.configure("Custom.Treeview", font=custom_font)
-        style.configure("Custom.Treeview.Heading", font=custom_font)
-
-        menubar = tk.Menu(self.root)
+        self.root.title("Flight File Manager")
+        self.root.geometry("1200x800")
+        self.root.configure(bg=ModernTheme.BACKGROUND)
+        
+        # Title bar
+        title_frame = tk.Frame(self.root, bg=ModernTheme.PRIMARY, pady=15)
+        title_frame.pack(fill="x")
+        
+        tk.Label(
+            title_frame,
+            text="Flight File Manager",
+            font=(ModernTheme.FONT_FAMILY, int(ModernTheme.FONT_SIZE_LARGE * 1.5), "bold"),
+            fg="white",
+            bg=ModernTheme.PRIMARY
+        ).pack()
+        
+        # Menu Bar with modern styling
+        menubar = tk.Menu(self.root, bg=ModernTheme.PRIMARY, fg="white")
         self.root.config(menu=menubar)
         
-        file_menu = tk.Menu(menubar, tearoff=0)
+        file_menu = tk.Menu(menubar, tearoff=0, bg=ModernTheme.BACKGROUND, fg=ModernTheme.TEXT_PRIMARY)
         menubar.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Select Drives & Scan", command=self.show_drive_selector)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.root.quit)
-
-        self.table_frame = tk.Frame(self.root)
-        self.table_frame.pack(fill="both", expand=True)
         
+        # Main content frame
+        content_frame = tk.Frame(self.root, bg=ModernTheme.BACKGROUND)
+        content_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        
+        # Treeview with modern styling
         self.table = ttk.Treeview(
-            self.table_frame,
+            content_frame,
             columns=("date", "plane", "id", "start_time", "end_time", "size"),
             show='headings',
             style="Custom.Treeview"
         )
-        self.table.pack(fill="both", expand=True)
-
-        for col in ("date", "plane", "id", "start_time", "end_time", "size"):
-            self.table.heading(col, text=col.capitalize())
-            self.table.column(col, width=100, anchor="center")
-
-        self.btn_frame = tk.Frame(self.root)
-        self.btn_frame.pack(fill="x")
-
-        self.copy_btn = tk.Button(self.btn_frame, text="Copy", command=self.copy_files)
-        self.copy_btn.pack(side="right", padx=5, pady=5)
-
-        self.delete_btn = tk.Button(self.btn_frame, text="Delete", command=self.delete_files)
-        self.delete_btn.pack(side="right", padx=5, pady=5)
-
-        self.easter_egg_btn = tk.Button(self.btn_frame, text="Easter Egg", command=self.display_easter_egg)
-        self.easter_egg_btn.pack(side="left", padx=5, pady=5)
-
-        self.progress_var = tk.DoubleVar()
-        self.progress_bar = ttk.Progressbar(self.root, variable=self.progress_var, maximum=100)
-        self.progress_bar.pack(fill="x", padx=5, pady=5)
         
-        self.status_label = tk.Label(self.root, text="Ready")
+        # Configure columns
+        column_config = {
+            "date": ("Date", 120),
+            "plane": ("Aircraft", 100),
+            "id": ("Drive ID", 80),
+            "start_time": ("Start Time", 150),
+            "end_time": ("End Time", 150),
+            "size": ("Size", 100)
+        }
+        
+        for col, (heading, width) in column_config.items():
+            self.table.heading(col, text=heading)
+            self.table.column(col, width=width, anchor="center")
+        
+        # Add scrollbars
+        y_scrollbar = ttk.Scrollbar(content_frame, orient="vertical", command=self.table.yview)
+        x_scrollbar = ttk.Scrollbar(content_frame, orient="horizontal", command=self.table.xview)
+        self.table.configure(yscrollcommand=y_scrollbar.set, xscrollcommand=x_scrollbar.set)
+        
+        # Grid layout for table and scrollbars
+        self.table.grid(row=0, column=0, sticky="nsew")
+        y_scrollbar.grid(row=0, column=1, sticky="ns")
+        x_scrollbar.grid(row=1, column=0, sticky="ew")
+        
+        content_frame.grid_columnconfigure(0, weight=1)
+        content_frame.grid_rowconfigure(0, weight=1)
+        
+        # Button frame with modern styling
+        btn_frame = tk.Frame(self.root, bg=ModernTheme.BACKGROUND)
+        btn_frame.pack(fill="x", padx=20, pady=10)
+        
+        ModernButton(
+            btn_frame,
+            text="Copy Selected",
+            command=self.copy_files
+        ).pack(side="right", padx=5)
+        
+        DeleteButton(
+            btn_frame,
+            text="Delete Selected",
+            command=self.delete_files
+        ).pack(side="right", padx=5)
+        
+        ModernButton(
+            btn_frame,
+            text="Easter Egg",
+            command=self.display_easter_egg
+        ).pack(side="left", padx=5)
+        
+        # Status frame
+        status_frame = tk.Frame(self.root, bg=ModernTheme.BACKGROUND)
+        status_frame.pack(fill="x", padx=20, pady=10)
+        
+        self.progress_var = tk.DoubleVar()
+        self.progress_bar = ttk.Progressbar(
+            status_frame,
+            variable=self.progress_var,
+            maximum=100,
+            style="Modern.Horizontal.TProgressbar"
+        )
+        self.progress_bar.pack(fill="x", pady=5)
+        
+        self.status_label = tk.Label(
+            status_frame,
+            text="Ready",
+            font=(ModernTheme.FONT_FAMILY, ModernTheme.FONT_SIZE_MEDIUM),
+            fg=ModernTheme.TEXT_SECONDARY,
+            bg=ModernTheme.BACKGROUND
+        )
         self.status_label.pack(pady=5)
 
     def show_drive_selector(self):
@@ -329,7 +518,6 @@ class FlightFileManager:
             self.root.after(0, self.status_label.config, {"text": "Ready"})
         
         self.executor.submit(delete_task)
-
 if __name__ == "__main__":
     root = tk.Tk()
     app = FlightFileManager(root)
