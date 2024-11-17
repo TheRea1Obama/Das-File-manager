@@ -22,6 +22,12 @@ class ModernTheme:
     SUCCESS = "#27AE60"  # Green
     WARNING = "#F39C12"  # Orange
     
+    # Table specific colors
+    TABLE_HEADER_BG = "#34495e"  # Darker blue-gray for header
+    TABLE_HEADER_FG = "#ffffff"  # White text for header
+    TABLE_ROW_SELECTED = "#3498db"  # Blue for selected row
+    TABLE_ROW_HOVER = "#d5dbdb"    # Light gray for hover
+    
     # Font configurations
     FONT_FAMILY = "Helvetica"
     FONT_SIZE_LARGE = 14
@@ -32,7 +38,7 @@ class ModernTheme:
     def configure_styles(cls):
         style = ttk.Style()
         
-        # Configure Treeview
+        # Configure the main Treeview style
         style.configure(
             "Custom.Treeview",
             background=cls.BACKGROUND,
@@ -42,11 +48,37 @@ class ModernTheme:
             font=(cls.FONT_FAMILY, cls.FONT_SIZE_MEDIUM)
         )
         
+        # Configure the Treeview header style
         style.configure(
-            "Custom.Treeview.Heading",
-            background=cls.PRIMARY,
-            foreground="white",
-            font=(cls.FONT_FAMILY, cls.FONT_SIZE_MEDIUM, "bold")
+            "Treeview.Heading",  # Changed from Custom.Treeview.Heading
+            background=cls.TABLE_HEADER_BG,
+            foreground=cls.TABLE_HEADER_FG,
+            font=(cls.FONT_FAMILY, cls.FONT_SIZE_MEDIUM, "bold"),
+            relief="flat"
+        )
+        
+        # Map states for the Treeview header
+        style.map("Treeview.Heading",
+            background=[
+                ("active", cls.PRIMARY),
+                ("pressed", cls.PRIMARY),
+            ],
+            foreground=[
+                ("active", "white"),
+                ("pressed", "white"),
+            ]
+        )
+        
+        # Map states for the Treeview
+        style.map("Custom.Treeview",
+            background=[
+                ("selected", cls.TABLE_ROW_SELECTED),
+                ("!selected", cls.BACKGROUND)
+            ],
+            foreground=[
+                ("selected", "white"),
+                ("!selected", cls.TEXT_PRIMARY)
+            ]
         )
         
         # Configure Buttons
@@ -291,12 +323,16 @@ class FlightFileManager:
         content_frame.pack(fill="both", expand=True, padx=20, pady=20)
         
         # Treeview with modern styling
+        # Treeview with modern styling
         self.table = ttk.Treeview(
             content_frame,
             columns=("date", "plane", "id", "start_time", "end_time", "size"),
             show='headings',
             style="Custom.Treeview"
         )
+        
+        # Override default style for headers
+        self.table.tag_configure('header', background=ModernTheme.TABLE_HEADER_BG, foreground="white")
         
         # Configure columns
         column_config = {
@@ -309,8 +345,9 @@ class FlightFileManager:
         }
         
         for col, (heading, width) in column_config.items():
-            self.table.heading(col, text=heading)
+            self.table.heading(col, text=heading, anchor="center")
             self.table.column(col, width=width, anchor="center")
+
         
         # Add scrollbars
         y_scrollbar = ttk.Scrollbar(content_frame, orient="vertical", command=self.table.yview)
@@ -391,26 +428,41 @@ class FlightFileManager:
         flight_data = {}
 
         for drive in selected_drives:
-            log_path = Path(drive) / '!shu_fd' / 'das' / 'RECORD.LOG'
-            if log_path.exists():
+            # Try both the root directory and the expected subdirectory
+            possible_paths = [
+                Path(drive) / 'RECORD.LOG',  # Current implementation
+                Path(drive) / '!shu_fd' / 'das' / 'RECORD.LOG',  # Original expected path
+            ]
+            
+            log_found = False
+            for log_path in possible_paths:
                 try:
-                    flights = RecordLogParser.parse_log_file(str(log_path))
-                    for flight in flights:
-                        key = f"{flight['date']}_{flight['plane_number']}_{self.drive_mapping.get(drive, 'Unknown')}"
-                        flight_data[key] = {
-                            'base_path': flight['base_path'],
-                            'base_filename': flight['base_filename'],
-                            'size': flight['size'],
-                            'start_time': flight['start_time'],
-                            'end_time': flight['end_time'],
-                            'drive': drive
-                        }
+                    if log_path.exists():
+                        print(f"Found log file at: {log_path}")  # Debug print
+                        flights = RecordLogParser.parse_log_file(str(log_path))
+                        for flight in flights:
+                            key = f"{flight['date']}_{flight['plane_number']}_{self.drive_mapping.get(drive, 'Unknown')}"
+                            flight_data[key] = {
+                                'base_path': flight['base_path'],
+                                'base_filename': flight['base_filename'],
+                                'size': flight['size'],
+                                'start_time': flight['start_time'],
+                                'end_time': flight['end_time'],
+                                'drive': drive
+                            }
+                        log_found = True
+                        print(f"Successfully processed {len(flights)} flights from {log_path}")  # Debug print
+                        break
                 except Exception as e:
-                    print(f"Error processing log file {log_path}: {e}")
+                    print(f"Error processing log file {log_path}: {str(e)}")
+            
+            if not log_found:
+                print(f"No valid RECORD.LOG found in any of the expected locations for drive {drive}")
 
         end_time = time.time()
         print(f"Log scan completed in {end_time - start_time:.2f} seconds")
         return flight_data
+
 
     def load_files(self, selected_drives):
         self.status_label.config(text="Loading files...")
