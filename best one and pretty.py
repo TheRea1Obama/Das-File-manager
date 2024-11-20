@@ -136,53 +136,84 @@ class RecordLogParser:
     def parse_log_file(log_path):
         flights = []
         current_flight = None
+        line_number = 0
         
-        with open(log_path, 'r') as f:
-            for line in f:
-                line = line.strip()
-                
-                # Check for new flight entry
-                if line.startswith('[') and line.endswith('.000]'):
-                    # Extract flight info from path
-                    flight_path = line[1:-1] 
-                    dir_name = os.path.dirname(flight_path)
-                    file_name = os.path.basename(flight_path)
+        print(f"\n=== Starting to parse log file: {log_path} ===")
+        
+        try:
+            with open(log_path, 'r') as f:
+                for line in f:
+                    line_number += 1
+                    line = line.strip()
                     
-                    # Parse flight details
-                    match = re.match(r'(\d{2})(\d{2})(\d{2})_(\d+)\.000', file_name)
-                    if match:
-                        day, month, year, plane = match.groups()
+                    # Debug output for every 1000 lines
+                    if line_number % 1000 == 0:
+                        print(f"Processing line {line_number}")
+                    
+                    # Check for new flight entry
+                    if line.startswith('[') and line.endswith('.000]'):
+                        print(f"\nFound potential flight entry at line {line_number}: {line}")
                         
-                        current_flight = {
-                            'date': f'20{year}{month}{day}',
-                            'plane_number': plane,
-                            'base_path': dir_name,
-                            'base_filename': file_name[:-4],  
-                            'size': 0,
-                            'start_time': None,
-                            'end_time': None
-                        }
-                
-                # Get start time
-                elif line.startswith('StartedAt=') and current_flight:
-                    time_str = line.split('=')[1]
-                    current_flight['start_time'] = time_str
-                
-                # Get end time and add flight to list
-                elif line.startswith('FinishedAt=') and current_flight:
-                    time_str = line.split('=')[1]
-                    current_flight['end_time'] = time_str
-                    flights.append(current_flight)
-                    current_flight = None
-                
-                # Get data length
-                elif line.startswith('DataLength=') and current_flight:
-                    try:
-                        size_str = line.split('=')[1].split(':')[0]
-                        current_flight['size'] = int(size_str)
-                    except (IndexError, ValueError):
-                        current_flight['size'] = 0
+                        # Extract flight info from path
+                        flight_path = line[1:-1] 
+                        dir_name = os.path.dirname(flight_path)
+                        file_name = os.path.basename(flight_path)
+                        
+                        # Parse flight details
+                        match = re.match(r'(\d{2})(\d{2})(\d{2})_(\d+)\.000', file_name)
+                        if match:
+                            day, month, year, plane = match.groups()
+                            
+                            current_flight = {
+                                'date': f'20{year}{month}{day}',
+                                'plane_number': plane,
+                                'base_path': dir_name,
+                                'base_filename': file_name[:-4],  
+                                'size': 0,
+                                'start_time': None,
+                                'end_time': None
+                            }
+                            print(f"Successfully parsed flight details: {current_flight}")
+                        else:
+                            print(f"Warning: Could not parse flight details from filename: {file_name}")
+                    
+                    # Get start time
+                    elif line.startswith('StartedAt=') and current_flight:
+                        time_str = line.split('=')[1]
+                        current_flight['start_time'] = time_str
+                        print(f"Found start time: {time_str}")
+                    
+                    # Get end time and add flight to list
+                    elif line.startswith('FinishedAt=') and current_flight:
+                        time_str = line.split('=')[1]
+                        current_flight['end_time'] = time_str
+                        print(f"Found end time: {time_str}")
+                        flights.append(current_flight)
+                        print(f"Added flight to list. Total flights so far: {len(flights)}")
+                        current_flight = None
+                    
+                    # Get data length
+                    elif line.startswith('DataLength=') and current_flight:
+                        try:
+                            size_str = line.split('=')[1].split(':')[0]
+                            current_flight['size'] = int(size_str)
+                            print(f"Found data length: {size_str}")
+                        except (IndexError, ValueError) as e:
+                            print(f"Warning: Could not parse data length from line: {line}")
+                            print(f"Error: {str(e)}")
+                            current_flight['size'] = 0
         
+        except Exception as e:
+            print(f"\nError while parsing log file:")
+            print(f"Last line processed: {line_number}")
+            print(f"Error details: {str(e)}")
+            import traceback
+            print("Full traceback:")
+            print(traceback.format_exc())
+            return []
+            
+        print(f"\n=== Finished parsing log file ===")
+        print(f"Total flights found: {len(flights)}")
         return flights
 
 class DriveSelector(tk.Toplevel):
@@ -430,8 +461,8 @@ class FlightFileManager:
         for drive in selected_drives:
             # Try both the root directory and the expected subdirectory
             possible_paths = [
-                Path(drive) / 'RECORD.LOG',  # Current implementation
-                Path(drive) / '!shu_fd' / 'das' / 'RECORD.LOG',  # Original expected path
+                Path(drive) / 'RECORDS.LOG',  # Current implementation
+                Path(drive) / '!shu_fd' / 'das' / 'RECORDS.LOG',  # Original expected path
             ]
             
             log_found = False
