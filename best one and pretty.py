@@ -323,7 +323,7 @@ class FlightFileManager:
         self.init_gui()
 
     def init_gui(self):
-        self.root.title("Flight File Manager")
+        self.root.title("Benjamin wipes his ass form the front (Monkey)")
         self.root.geometry("1200x800")
         self.root.configure(bg=ModernTheme.BACKGROUND)
         
@@ -446,8 +446,9 @@ class FlightFileManager:
     def easter_egg_message(self):
         messages = [
             "Benjamin likes little boys :-(",
-            "Kiril is giving that Hawk Tuah",
-            "where is kush kush"
+            "Hawk Tuah and spit on that thing",
+            "Baraky has a child",
+            "Benjamin wipes his ass form the front (Monkey)",
         ]
         return random.choice(messages)
 
@@ -534,9 +535,18 @@ class FlightFileManager:
             
         flight = self.flight_data[flight_key]
         try:
-            # Construct the base path
-            base_path = Path(flight['drive']) / flight['base_path'].lstrip('/')
-            base_filename = flight['base_filename']
+            # Parse the flight key
+            date, plane_number, drive_id = flight_key.split('_')
+            
+            # Get the drive letter from drive_mapping
+            drive = next(
+                drive for drive, id in self.drive_mapping.items() 
+                if str(id) == drive_id
+            )
+            
+            # Construct the base path using the drive letter and fixed subdirectory
+            base_path = Path(drive) / '!shu_fd' / 'das'
+            base_filename = f"{date}_{plane_number}"
             
             # Print debug information
             print(f"Searching for files:")
