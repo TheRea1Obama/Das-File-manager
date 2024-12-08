@@ -461,8 +461,8 @@ class FlightFileManager:
         for drive in selected_drives:
             # Try both the root directory and the expected subdirectory
             possible_paths = [
-                Path(drive) / 'RECORDS.LOG',  # Current implementation
-                Path(drive) / '!shu_fd' / 'das' / 'RECORDS.LOG',  # Original expected path
+                Path(drive) / '!shu_fd' / 'das' / 'RECORDS.LOG',
+                Path(drive) / '!shu_fd' / 'das' / 'RECORDS',  # Original expected path
             ]
             
             log_found = False
@@ -524,16 +524,38 @@ class FlightFileManager:
         self.status_label.config(text="Ready")
 
     def get_flight_files(self, flight_key):
+        """
+        Get all related files for a given flight key.
+        Returns a list of Path objects for all matching files.
+        """
         if flight_key not in self.flight_data:
+            print(f"Flight key {flight_key} not found in flight_data")
             return []
             
         flight = self.flight_data[flight_key]
-        base_path = Path(flight['drive']) / '!shu_fd' / 'das'
-        pattern = f"{flight['base_filename']}.*"
-        
-        return list(base_path.glob(pattern))
+        try:
+            # Construct the base path
+            base_path = Path(flight['drive']) / flight['base_path'].lstrip('/')
+            base_filename = flight['base_filename']
+            
+            # Print debug information
+            print(f"Searching for files:")
+            print(f"Base path: {base_path}")
+            print(f"Base filename: {base_filename}")
+            
+            # Get all files that start with the base filename
+            matching_files = list(base_path.glob(f"{base_filename}.*"))
+            print(f"Found {len(matching_files)} matching files: {[str(f) for f in matching_files]}")
+            
+            return matching_files
+        except Exception as e:
+            print(f"Error in get_flight_files: {str(e)}")
+            return []
 
     def copy_files(self):
+        """
+        Copy selected flight files to a chosen destination directory.
+        """
         selected = self.table.selection()
         if not selected:
             messagebox.showwarning("No Selection", "Please select a flight to copy.")
@@ -542,65 +564,129 @@ class FlightFileManager:
         dest_dir = filedialog.askdirectory(title="Select Destination")
         if not dest_dir:
             return
+            
+        dest_path = Path(dest_dir)
+        total_files = 0
+        copied_files = 0
         
         self.status_label.config(text="Copying files...")
+        self.progress_var.set(0)
         
         def copy_task():
-            for item in selected:
-                values = self.table.item(item, 'values')
-                if values:
-                    date, plane_number, drive_id = values[:3]
-                    date = date.replace("/", "")
-                    key = f"{date}_{plane_number}_{drive_id}"
-                    
-                    files = self.get_flight_files(key)
-                    for file in files:
-                        try:
-                            shutil.copy2(file, dest_dir)
-                        except Exception as e:
-                            self.root.after(0, messagebox.showerror, "Copy Error", 
-                                          f"Error copying file {file}: {str(e)}")
-                            
-            self.root.after(0, messagebox.showinfo, "Copy Complete", 
-                          "Selected files have been copied.")
-            self.root.after(0, self.status_label.config, {"text": "Ready"})
+            nonlocal total_files, copied_files
+            
+            try:
+                # First pass: count total files
+                for item in selected:
+                    values = self.table.item(item, 'values')
+                    if values:
+                        date = values[0].replace("/", "")  # Convert DD/MM/YYYY to DDMMYYYY
+                        plane_number = values[1]
+                        drive_id = values[2]
+                        key = f"{date}_{plane_number}_{drive_id}"
+                        
+                        files = self.get_flight_files(key)
+                        total_files += len(files)
+                
+                # Second pass: copy files
+                for item in selected:
+                    values = self.table.item(item, 'values')
+                    if values:
+                        date = values[0].replace("/", "")
+                        plane_number = values[1]
+                        drive_id = values[2]
+                        key = f"{date}_{plane_number}_{drive_id}"
+                        
+                        files = self.get_flight_files(key)
+                        for file in files:
+                            try:
+                                shutil.copy2(file, dest_path / file.name)
+                                copied_files += 1
+                                progress = (copied_files / total_files) * 100
+                                self.root.after(0, self.progress_var.set, progress)
+                                self.root.after(0, self.status_label.config, 
+                                              {"text": f"Copying files... ({copied_files}/{total_files})"})
+                            except Exception as e:
+                                print(f"Error copying {file}: {str(e)}")
+                                self.root.after(0, messagebox.showerror, "Copy Error", 
+                                              f"Error copying file {file}: {str(e)}")
+                
+                self.root.after(0, messagebox.showinfo, "Copy Complete", 
+                              f"Successfully copied {copied_files} out of {total_files} files.")
+            finally:
+                self.root.after(0, self.status_label.config, {"text": "Ready"})
+                self.root.after(0, self.progress_var.set, 0)
         
         self.executor.submit(copy_task)
 
     def delete_files(self):
+        """
+        Delete selected flight files.
+        """
         selected = self.table.selection()
         if not selected:
             messagebox.showwarning("No Selection", "Please select a flight to delete.")
             return
         
+        # Count total files before asking for confirmation
+        total_files = 0
+        for item in selected:
+            values = self.table.item(item, 'values')
+            if values:
+                date = values[0].replace("/", "")
+                plane_number = values[1]
+                drive_id = values[2]
+                key = f"{date}_{plane_number}_{drive_id}"
+                files = self.get_flight_files(key)
+                total_files += len(files)
+        
         confirm = messagebox.askyesno("Confirm Deletion", 
-                                    "Are you sure you want to delete the selected files?")
+                                    f"Are you sure you want to delete {total_files} files?")
         if not confirm:
             return
         
         self.status_label.config(text="Deleting files...")
+        self.progress_var.set(0)
+        deleted_files = 0
         
         def delete_task():
-            for item in selected:
-                values = self.table.item(item, 'values')
-                if values:
-                    date, plane_number, drive_id = values[:3]
-                    date = date.replace("/", "")
-                    key = f"{date}_{plane_number}_{drive_id}"
-                    
-                    files = self.get_flight_files(key)
-                    for file in files:
-                        try:
-                            os.remove(file)
-                        except Exception as e:
-                            self.root.after(0, messagebox.showerror, "Deletion Error", 
-                                          f"Error deleting file {file}: {str(e)}")
-                            
-            self.root.after(0, messagebox.showinfo, "Deletion Complete", 
-                          "Selected files have been deleted.")
-            self.root.after(0, self.status_label.config, {"text": "Ready"})
+            nonlocal deleted_files
+            
+            try:
+                for item in selected:
+                    values = self.table.item(item, 'values')
+                    if values:
+                        date = values[0].replace("/", "")
+                        plane_number = values[1]
+                        drive_id = values[2]
+                        key = f"{date}_{plane_number}_{drive_id}"
+                        
+                        files = self.get_flight_files(key)
+                        for file in files:
+                            try:
+                                os.remove(file)
+                                deleted_files += 1
+                                progress = (deleted_files / total_files) * 100
+                                self.root.after(0, self.progress_var.set, progress)
+                                self.root.after(0, self.status_label.config, 
+                                              {"text": f"Deleting files... ({deleted_files}/{total_files})"})
+                            except Exception as e:
+                                print(f"Error deleting {file}: {str(e)}")
+                                self.root.after(0, messagebox.showerror, "Deletion Error", 
+                                              f"Error deleting file {file}: {str(e)}")
+                
+                # Remove deleted items from the table
+                for item in selected:
+                    self.table.delete(item)
+                
+                self.root.after(0, messagebox.showinfo, "Deletion Complete", 
+                              f"Successfully deleted {deleted_files} out of {total_files} files.")
+            finally:
+                self.root.after(0, self.status_label.config, {"text": "Ready"})
+                self.root.after(0, self.progress_var.set, 0)
         
         self.executor.submit(delete_task)
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = FlightFileManager(root)
