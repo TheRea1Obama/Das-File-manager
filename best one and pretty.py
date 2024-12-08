@@ -323,7 +323,7 @@ class FlightFileManager:
         self.init_gui()
 
     def init_gui(self):
-        self.root.title("Flight File Manager")
+        self.root.title("Benjamin wipes his ass form the front (Monkey)")
         self.root.geometry("1200x800")
         self.root.configure(bg=ModernTheme.BACKGROUND)
         
@@ -446,8 +446,9 @@ class FlightFileManager:
     def easter_egg_message(self):
         messages = [
             "Benjamin likes little boys :-(",
-            "Kiril is giving that Hawk Tuah",
-            "where is kush kush"
+            "Hawk Tuah and spit on that thing",
+            "Baraky has a child",
+            "Benjamin wipes his ass form the front (Monkey)",
         ]
         return random.choice(messages)
 
@@ -533,24 +534,10 @@ class FlightFileManager:
             return []
             
         flight = self.flight_data[flight_key]
-        try:
-            # Construct the base path
-            base_path = Path(flight['drive']) / flight['base_path'].lstrip('/')
-            base_filename = flight['base_filename']
-            
-            # Print debug information
-            print(f"Searching for files:")
-            print(f"Base path: {base_path}")
-            print(f"Base filename: {base_filename}")
-            
-            # Get all files that start with the base filename
-            matching_files = list(base_path.glob(f"{base_filename}.*"))
-            print(f"Found {len(matching_files)} matching files: {[str(f) for f in matching_files]}")
-            
-            return matching_files
-        except Exception as e:
-            print(f"Error in get_flight_files: {str(e)}")
-            return []
+        base_path = Path(flight['drive']) / '!shu_fd' / 'das'
+        pattern = f"{flight['base_filename']}.*"
+        
+        return list(base_path.glob(pattern))
 
     def copy_files(self):
         """
