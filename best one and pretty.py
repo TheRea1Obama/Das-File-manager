@@ -1,4 +1,3 @@
-import os
 import random
 import shutil
 import re
@@ -10,6 +9,7 @@ import asyncio
 import time
 from datetime import datetime
 from tkinter import PhotoImage
+import os
 
 class ModernTheme:
     # Color scheme
@@ -160,7 +160,7 @@ class RecordLogParser:
                         file_name = os.path.basename(flight_path)
                         
                         # Parse flight details
-                        match = re.match(r'(\d{2})(\d{2})(\d{2})_(\d+)\.000', file_name)
+                        match = re.match(r'(\d{2})(\d{2})(\d{2})_(\d{3})\.000', file_name)
                         if match:
                             day, month, year, plane = match.groups()
                             
@@ -323,7 +323,7 @@ class FlightFileManager:
         self.init_gui()
 
     def init_gui(self):
-        self.root.title("Benjamin wipes his ass form the front (Monkey)")
+        self.root.title("Flight File Manager")
         self.root.geometry("1200x800")
         self.root.configure(bg=ModernTheme.BACKGROUND)
         
@@ -446,9 +446,8 @@ class FlightFileManager:
     def easter_egg_message(self):
         messages = [
             "Benjamin likes little boys :-(",
-            "Hawk Tuah and spit on that thing",
-            "Baraky has a child",
-            "Benjamin wipes his ass form the front (Monkey)",
+            "Kiril is giving that Hawk Tuah",
+            "where is kush kush"
         ]
         return random.choice(messages)
 
@@ -463,17 +462,18 @@ class FlightFileManager:
             # Try both the root directory and the expected subdirectory
             possible_paths = [
                 Path(drive) / '!shu_fd' / 'das' / 'RECORDS.LOG',
-                Path(drive) / '!shu_fd' / 'das' / 'RECORDS',  # Original expected path
+                Path(drive) / '!shu_fd' / 'das' / 'RECORDS',  
             ]
             
             log_found = False
             for log_path in possible_paths:
                 try:
                     if log_path.exists():
-                        print(f"Found log file at: {log_path}")  # Debug print
+                        print(f"Found log file at: {log_path}")  # Debug 
                         flights = RecordLogParser.parse_log_file(str(log_path))
                         for flight in flights:
-                            key = f"{flight['date']}_{flight['plane_number']}_{self.drive_mapping.get(drive, 'Unknown')}"
+                            # Use the base_filename directly as the key
+                            key = flight['base_filename']
                             flight_data[key] = {
                                 'base_path': flight['base_path'],
                                 'base_filename': flight['base_filename'],
@@ -495,7 +495,6 @@ class FlightFileManager:
         print(f"Log scan completed in {end_time - start_time:.2f} seconds")
         return flight_data
 
-
     def load_files(self, selected_drives):
         self.status_label.config(text="Loading files...")
         self.progress_var.set(0)
@@ -509,35 +508,70 @@ class FlightFileManager:
 
     def display_flights(self):
         for key, data in self.flight_data.items():
-            date, plane_number, drive_id = key.split('_')
-            formatted_date = f"{date[6:8]}/{date[4:6]}/{date[:4]}"
-            size_gb = data['size'] / (1024 * 1024 * 1024)
-            
-            self.table.insert("", "end", values=(
-                formatted_date,
-                plane_number,
-                drive_id,
-                data['start_time'],
-                data['end_time'],
-                f"{size_gb:.2f} GB"
-            ))
-            
+            # Parse the key directly
+            match = re.match(r'(\d{6})_(\d{3})', key)
+            if match:
+                date_part, plane_number = match.groups()
+                # Convert to DD/MM/YY format
+                formatted_date = f"{date_part[0:2]}/{date_part[2:4]}/20{date_part[4:6]}"
+                size_gb = data['size'] / (1024 * 1024 * 1024)
+                
+                self.table.insert("", "end", values=(
+                    formatted_date,
+                    plane_number,
+                    self.drive_mapping.get(data['drive'], 'Unknown'),
+                    data['start_time'],
+                    data['end_time'],
+                    f"{size_gb:.2f} GB"
+                ))
+        
         self.status_label.config(text="Ready")
+
 
     def get_flight_files(self, flight_key):
         """
         Get all related files for a given flight key.
-        Returns a list of Path objects for all matching files.
-        """
-        if flight_key not in self.flight_data:
-            print(f"Flight key {flight_key} not found in flight_data")
-            return []
-            
-        flight = self.flight_data[flight_key]
-        base_path = Path(flight['drive']) / '!shu_fd' / 'das'
-        pattern = f"{flight['base_filename']}.*"
         
-        return list(base_path.glob(pattern))
+        Args:
+        flight_key (str): Full key with format 'DDMMYYYY_PlaneNumber_StationID'
+        
+        Returns:
+        List of Path objects for matching files
+        """
+        try:
+            # Split the full key and extract just the date and plane number
+            # Example: '27112024_200_61' -> '271124_200'
+            parts = flight_key.split('_')
+            if len(parts) < 2:
+                print(f"Invalid flight key format: {flight_key}")
+                return []
+            
+            # Format date from DDMMYYYY to DDMMYY
+            date_formatted = parts[0][0:2] + parts[0][2:4] + parts[0][6:8]
+            simplified_key = f"{date_formatted}_{parts[1]}"
+            
+            # Construct the base path
+            base_path = Path("C:/!shu_fd/das")
+            
+            # Verbose logging to help diagnose issues
+            print(f"Searching for files:")
+            print(f"Original flight key: {flight_key}")
+            print(f"Simplified search key: {simplified_key}")
+            print(f"Base path: {base_path}")
+            
+            # Use glob to find files that start with the simplified key
+            matching_files = list(base_path.glob(f"{simplified_key}*"))
+            
+            print(f"Found {len(matching_files)} matching files:")
+            for file in matching_files:
+                print(f" - {file}")
+            
+            return matching_files
+        
+        except Exception as e:
+            print(f"Error in get_flight_files: {str(e)}")
+            return []
+
 
     def copy_files(self):
         """
